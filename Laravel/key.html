@@ -1,0 +1,26 @@
+// так він виглядає незахешований
+$ContentRequest->id.config('app.key').$ContentRequest->created_at;
+// отак воно генерувалось в старих вьюхах, думаю, можна це використати
+<a href="{{ url('/recorder/'.$request->id.'?key='.urlencode(Hash::make($request->id.config('app.key').$request->created_at))) }}" style="text-decoration: none; display: block;" >
+
+
+// kim work - створення key
+foreach(Request::post('assignee_id') as $id) {
+    // if (is_string($id) && (Auth::user()->isSuperAdmin())) { ---- Admins can send external content requests only
+    if (is_string($id)) {
+        $fields['assignee_id'] = 0;
+        $fields['external'] = 1;
+        $fields['external_email'] = $id;
+        $item = ContentRequest::create($fields);
+
+        $key = '?key=' . urlencode(Hash::make($item->id.config('app.key').$item->created_at));
+        $data = (object) [
+            'key' => $key,
+            'buttonEmailPath' => 'contents.record.guest',
+            'buttonUploadPath' => 'external.uploader'
+        ];
+
+        Mail::to((object)[
+            'email' => $id, 'name' => $id
+        ])->queue(new ContentRequested($item, $data));
+    } else {

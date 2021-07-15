@@ -1,3 +1,5 @@
+props emit
+https://monsterlessons.com/project/lessons/peredaem-dannye-iz-child-v-parent-v-vue
 
 // 1.
 <template>

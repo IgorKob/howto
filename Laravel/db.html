@@ -8,3 +8,26 @@ $podcasts = PodcastingRecord::where('approved', true)
 $podcasts = $podcasts->select('podcasting_records.*');
 $podcasts = $podcasts->join('users', 'users.id', '=', 'podcasting_records.user_id');
 $podcasts = $podcasts->where('users.company_id', Auth::user()->company_id);
+
+
+
+// 3.
+для вставки нового рядка
+$users = DB::table('users')
+   ->select(DB::raw('count(*) as user_count, status'))
+   ->where('status', '<>', 1)
+   ->groupBy('status')
+   ->get();
+
+
+// 4.
+обєднання стовпців
+$companies = Company::orderBy('name')
+    ->join('users', function ($join) {
+        $join->on('companies.id', '=', 'users.company_id')
+        ->where('users.deleted_at', null);
+    })
+    ->select('companies.*', 'users.company_id', DB::raw('count(*) as total'))
+    ->groupBy('users.company_id')
+    ->filter(Request::only('search', 'trashed'))
+    ->paginate();
