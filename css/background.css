@@ -7,6 +7,21 @@ background-origin: content-box;       картинка починається в
 background-clip: padding-box;           картинка починається з border
 background-clip: content-box;          картинка починається в content, не заходячи на padding
 
+
+// фон з косою лінією
+.o-guest-layout__diagonal-box:before {
+    background: url('/img/guest/landing-bg.png') no-repeat center / cover, linear-gradient(110deg, palette(primary, base) 0%, palette(primary, 100) 30%, palette(primary, 200) 70%, palette(primary, base) 100%);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    content: '';
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 0% 80%);
+    z-index: -100;
+}
+
+
 body {
   background: lightblue url("1.gif") bottom right no-repeat;
   background-image: url('1.jpg');

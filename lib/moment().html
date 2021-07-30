@@ -1,0 +1,12 @@
+
+// видає локальний час користувача
+utcToLocalTime(utcTimeString) {
+    var theTime  = moment.utc(utcTimeString).toDate(); // moment date object in local time
+    var localTime = moment(theTime).format('YYYY-MM-DD HH:mm'); //format the moment time object to string
+    return localTime;
+}
+
+
+//
+moment.js
+moment('2018-05-12T23:16:46.123456Z').locale('fr').calendar()

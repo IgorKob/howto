@@ -1,3 +1,10 @@
+// 404 kim
+// https://codezen.io/how-to-create-a-custom-404-page-in-laravel-7/
+Route::get('/404', [Contentscontroller::class, 'pageNotFound'])->name('404');
+Route::get('/{any}', [Contentscontroller::class, 'pageNotFound'])->where('any', '.*');
+
+
+
 We use inertiajs: https://inertiajs.com/
 In order to add new page with view you need:
 - Generate new Controller

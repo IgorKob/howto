@@ -1,0 +1,30 @@
+https://carbon.nesbot.com/docs/#api-localization
+https://kylekatarnls.medium.com/handle-dates-the-right-way-in-php-c215650fc4fa
+
+// kim
+$date = new CarbonImmutable($item->start_date);
+$date2 =  Carbon::createFromFormat('Y-m-d H:i:s', $date, 'Etc/UTC')
+    ->setTimezone('America/Chicago');
+$start_date = $date2->format('l, F jS, Y \a\t h:i a T');
+
+//kim
+$date = new CarbonImmutable(date_create($obj->start_date));
+$date2 =  Carbon::createFromFormat('Y-m-d H:i:s', $date, 'Etc/UTC')
+    ->setTimezone('America/Chicago');
+$start_date = $date2->format('l, F jS, Y \a\t h:i a T');
+
+
+
+//
+$utcString = '2018-05-12 23:16:46.123456';
+$date = new CarbonImmutable($utcString);
+echo $date->tz($timezone)->locale($lang)->calendar();
+
+
+// not my
+@foreach ($company->users as $user)
+    {{--*/
+        $date = Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $user->last_login_time, 'UTC')->setTimezone('America/Chicago')->format('F d, Y @ h:i:s A T');
+    /*--}}
+    {{ $date }}
+@endforeach
