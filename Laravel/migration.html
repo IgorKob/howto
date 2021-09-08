@@ -1,0 +1,76 @@
+
+міграція додавання нового рядка user_id
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
+class AddUserIdToCompanies extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('companies', function (Blueprint $table) {
+            $table->integer('user_id')->after('domain')->nullable();
+        });
+
+        DB::update('UPDATE companies SET companies.user_id = (SELECT users.id FROM users WHERE users.name = companies.added_by) WHERE companies.user_id IS NULL;');
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('companies', function (Blueprint $table) {
+            $table->dropColumn('user_id');
+        });
+    }
+}
+
+
+
+// додаток до міграції
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
+class AddUserIdToCompanies extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('companies', function (Blueprint $table) {
+            $table->integer('user_id')->after('domain')->nullable();
+        });
+
+        DB::update('UPDATE companies SET companies.user_id = (SELECT users.id FROM users WHERE users.name = companies.added_by ORDER BY users.id LIMIT 1) WHERE companies.user_id IS NULL;');
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('companies', function (Blueprint $table) {
+            $table->dropColumn('user_id');
+        });
+    }
+}
