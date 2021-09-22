@@ -12,6 +12,13 @@ php artisan migrate
 
 // clear cache
 php artisan storage:link
+php artisan config:cache
 
 // буде рефрешити сторінку по ідеї
 return Redirect::back()
+
+
+
+// dd($gallery_item->image);
+// dd(url($gallery_item->image, [], config('app.env') == 'staging' ? true : false));
+// dd(asset($gallery_item->image));
